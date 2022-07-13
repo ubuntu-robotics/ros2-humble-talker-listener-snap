@@ -17,5 +17,6 @@ parts:
 apps:
  ros2-talker-listener:
    command: opt/ros/humble/bin/ros2 launch talker-listener talker_listener.launch.py
+   daemon: simple
    plugs: [network, network-bind]
    extensions: [ros2-humble]
