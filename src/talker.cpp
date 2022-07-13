@@ -11,8 +11,7 @@ using namespace std::chrono_literals;
 
 class Talker : public rclcpp::Node {
 public:
-  explicit Talker()
-      : Node("talker") {
+  explicit Talker() : Node("talker") {
     auto publish_message = [this]() -> void {
       msg_ = std::make_unique<std_msgs::msg::String>();
       msg_->data = "Hello World: " + std::to_string(count_++);
@@ -38,4 +37,3 @@ int main(int argc, char **argv) {
   rclcpp::shutdown();
   return 0;
 }
-
