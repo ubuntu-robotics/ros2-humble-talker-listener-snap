@@ -4,7 +4,8 @@ summary: ROS 2 Talker/Listener Example
 description: |
  This example launches a ROS 2 talker and listener.
 
-confinement: devmode
+confinement: strict
+grade: stable
 base: core22
 
 parts:
@@ -16,4 +17,5 @@ parts:
 apps:
  ros2-talker-listener:
    command: opt/ros/humble/bin/ros2 launch talker-listener talker_listener.launch.py
+   plugs: [network, network-bind]
    extensions: [ros2-humble]
