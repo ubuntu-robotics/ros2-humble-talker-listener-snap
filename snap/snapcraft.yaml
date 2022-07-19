@@ -9,14 +9,16 @@ grade: stable
 base: core22
 
 parts:
- talker-listener:
+ ros-demos:
    plugin: colcon
-   source: .
+   source: https://github.com/ros2/demos.git
+   source-branch: humble
+   colcon-packages: [demo_nodes_cpp]
    stage-packages: [ros-humble-ros2launch]
 
 apps:
  ros2-talker-listener:
-   command: opt/ros/humble/bin/ros2 launch talker-listener talker_listener.launch.py
+   command: opt/ros/humble/bin/ros2 launch demo_nodes_cpp talker_listener.launch.py
    daemon: simple
    plugs: [network, network-bind]
    extensions: [ros2-humble]
