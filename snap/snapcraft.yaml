@@ -12,7 +12,7 @@ parts:
    plugin: colcon
    source: https://github.com/ros2/demos.git
    source-branch: humble
-   colcon-packages: [demo_nodes_cpp]
+   source-subdir: demo_nodes_cpp
    stage-packages: [ros-humble-ros2launch]
 
 apps:
