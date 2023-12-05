@@ -4,7 +4,7 @@ on:
     tags:
       - '*'
     branches:
-      - main
+      - F_add_action_main
   pull_request:
     branches:
       - main
