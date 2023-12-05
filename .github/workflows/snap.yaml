@@ -25,7 +25,6 @@ jobs:
         sudo snap install ${{ steps.build-snap.outputs.snap }} --devmode
     # Do some testing with the snap
     - run: |
-        ros2-talker-listener
         snap info ros2-talker-listener
     - uses: actions/upload-artifact@v3
       with:
