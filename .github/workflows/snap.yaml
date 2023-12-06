@@ -26,7 +26,6 @@ jobs:
     # Do some testing with the snap
     - run: |
         snap connections ros2-talker-listener
-        snap info ros2-talker-listener
     - uses: actions/upload-artifact@v3
       with:
         name: ros2-talker-listener
