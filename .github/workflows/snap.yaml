@@ -1,8 +1,6 @@
 name: snap
 on:
   push:
-    tags:
-      - '*'
     branches:
       - daemon
   pull_request:
@@ -22,7 +20,7 @@ jobs:
 
     # Make sure the snap is installable
     - run: |
-        sudo snap install ${{ steps.build-snap.outputs.snap }} --devmode
+        sudo snap install ${{ steps.build-snap.outputs.snap }} --dangerous
     # Do some testing with the snap
     - run: |
         snap info ros2-talker-listener
