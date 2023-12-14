@@ -1,0 +1,22 @@
+name: Scheduled
+on:
+  schedule:
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
+
+jobs:
+  main-snap:
+    uses: ubuntu-robotics/ros2-humble-talker-listener-snap/.github/workflows/snap.yaml@main
+    with:
+      branch-name: main
+      snap-name: ros2-talker-listener
+  confined-snap:
+    uses: ubuntu-robotics/ros2-humble-talker-listener-snap/.github/workflows/snap.yaml@confined
+    with:
+      branch-name: confined
+      snap-name: ros2-talker-listener
+  daemon-snap:
+    uses: ubuntu-robotics/ros2-humble-talker-listener-snap/.github/workflows/snap.yaml@daemon
+    with:
+      branch-name: daemon
+      snap-name: ros2-talker-listener

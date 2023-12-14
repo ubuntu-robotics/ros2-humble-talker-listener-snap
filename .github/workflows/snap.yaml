@@ -1,7 +1,5 @@
 name: snap
 on:
-  schedule:
-    - cron: '0 0 1 * *'
   push:
     branches:
       - main
@@ -9,20 +7,11 @@ on:
     branches:
       - main
   workflow_dispatch:
+  workflow_call:
 
 jobs:
   main-snap:
     uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@main
     with:
       branch-name: main
-      snap-name: ros2-talker-listener
-  confined-snap:
-    uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@main
-    with:
-      branch-name: confined
-      snap-name: ros2-talker-listener
-  daemon-snap:
-    uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@main
-    with:
-      branch-name: daemon
       snap-name: ros2-talker-listener
