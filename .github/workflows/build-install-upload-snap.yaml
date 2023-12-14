@@ -9,7 +9,6 @@ on:
 
 jobs:
   triage:
-    steps:
     runs-on: ubuntu-latest
     outputs:
       snap-file: ${{ steps.build-snap.outputs.snap }}
