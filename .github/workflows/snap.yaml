@@ -12,17 +12,17 @@ on:
 
 jobs:
   main-snap:
-    uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@F_build_install_snap_workflow
+    uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@main
     with:
       branch-name: main
       snap-name: ros2-talker-listener
   confined-snap:
-    uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@F_build_install_snap_workflow
+    uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@main
     with:
       branch-name: confined
       snap-name: ros2-talker-listener
   daemon-snap:
-    uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@F_build_install_snap_workflow
+    uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@main
     with:
       branch-name: daemon
       snap-name: ros2-talker-listener
