@@ -10,8 +10,8 @@ on:
   workflow_call:
 
 jobs:
-  main-snap:
+  confined-snap:
     uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@main
     with:
-      branch-name: main
+      branch-name: confined
       snap-name: ros2-talker-listener
