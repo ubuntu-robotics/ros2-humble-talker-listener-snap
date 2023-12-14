@@ -6,6 +6,9 @@ on:
       snap-name:
         required: true
         type: string
+      branch-name:
+        required: true
+        type: string
 
 jobs:
   triage:
