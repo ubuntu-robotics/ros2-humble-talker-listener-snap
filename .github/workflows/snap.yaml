@@ -3,8 +3,6 @@ on:
   schedule:
     - cron: '0 0 1 * *'
   push:
-    tags:
-      - '*'
     branches:
       - main
   pull_request:
@@ -13,22 +11,18 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    outputs:
-      snap-file: ${{ steps.build-snap.outputs.snap }}
-    steps:
-    - uses: actions/checkout@v2
-    - uses: snapcore/action-build@v1
-      id: build-snap
-
-    # Make sure the snap is installable
-    - run: |
-        sudo snap install ${{ steps.build-snap.outputs.snap }} --devmode
-    # Do some testing with the snap
-    - run: |
-        snap info ros2-talker-listener
-    - uses: actions/upload-artifact@v3
-      with:
-        name: ros2-talker-listener
-        path: ${{ steps.build-snap.outputs.snap }}
+  main-snap:
+    uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@main
+    with:
+      branch-name: main
+      snap-name: ros2-talker-listener
+  confined-snap:
+    uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@main
+    with:
+      branch-name: confined
+      snap-name: ros2-talker-listener
+  daemon-snap:
+    uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@main
+    with:
+      branch-name: daemon
+      snap-name: ros2-talker-listener
