@@ -11,7 +11,20 @@ on:
 
 jobs:
   main-snap:
-    uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@main
-    with:
-      branch-name: main
-      snap-name: ros2-talker-listener
+    steps:
+    - uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@F_add_build_install_template
+      with:
+        branch-name: main
+        snap-name: ros2-talker-listener
+    - name: Run snap info command
+      run: |
+        output=$(snap info ros2-talker-listener)
+    - name: Compare Output with Repository Content
+      run: |
+        expected_output_file=".github/workflows/assert_files/expected_output.txt"
+        if [ "$(head -n -2 $expected_output_file)" != "$(head -n -2 <<< "$output")" ]; then
+          echo "Error: Output does not match expected content"
+          exit 1
+        else
+          echo "Success: Output matches the expected content."
+        fi
