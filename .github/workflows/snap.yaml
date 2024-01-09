@@ -17,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        ref: main
+        ref: F_add_snap_info_check
     - uses: snapcore/action-build@v1
       id: build-snap
     - name: Install snap
@@ -25,8 +25,10 @@ jobs:
         sudo snap install ${{ steps.build-snap.outputs.snap }} --devmode
     - name: Check snap info command is equal to tutorial
       run: |
-        expected_output_file="/home/runner/work/ros2-humble-talker-listener-snap/info_expected_output.txt"
+        expected_output_file="info_expected_output.txt"
+        echo $expected_output_file
         output=$(snap info ros2-talker-listener)
+        echo $output
         if [ "$(head -n -2 $expected_output_file)" != "$(head -n -2 <<< "$output")" ]; then
           echo "Error: Output does not match expected content"
           exit 1
