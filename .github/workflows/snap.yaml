@@ -25,22 +25,8 @@ jobs:
         sudo snap install ${{ steps.build-snap.outputs.snap }} --devmode
     - name: Check snap info command is equal to tutorial
       run: |
-        expected_output_file=$(cat "info_expected_output.txt")
-        echo $expected_output_file
-        output=$(snap info ros2-talker-listener)
-        echo $output
-        if [ "$(head -n -2 $expected_output_file)" != "$(head -n -2 <<< "$output")" ]; then
-          echo "Error: Output does not match expected content"
-          exit 1
-        else
-          echo "Success: Output matches the expected content."
-        fi
-    # Get branch name without forbidden character
-    - name: Branch name
-      id: branch-name
-      run: |
-        echo "BRANCH_NAME=main" >> "$GITHUB_OUTPUT"
+        bash .github/workflows/tests/info_equal_test.sh
     - uses: actions/upload-artifact@v3
       with:
-        name: ros2-talker-listener-${{ steps.branch-name.outputs.BRANCH_NAME }}
+        name: ros2-talker-listener-main
         path: ${{ steps.build-snap.outputs.snap }}

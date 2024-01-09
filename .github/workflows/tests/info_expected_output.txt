@@ -1,10 +1,10 @@
 name:      ros2-talker-listener
 summary:   ROS 2 Talker/Listener Example
-publisher: –
+publisher: --
 license:   unset
 description: |
   This example launches a ROS 2 talker and listener.
-Commands:
+commands:
   - ros2-talker-listener
 refresh-date: today at 10:54 CEST
 installed:    0.1 (x1) 64MB devmode
