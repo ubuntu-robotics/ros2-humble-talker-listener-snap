@@ -25,7 +25,7 @@ jobs:
         sudo snap install ${{ steps.build-snap.outputs.snap }} --devmode
     - name: Check snap info command is equal to tutorial
       run: |
-        expected_output_file="info_expected_output.txt"
+        expected_output_file=$(cat "info_expected_output.txt")
         echo $expected_output_file
         output=$(snap info ros2-talker-listener)
         echo $output
