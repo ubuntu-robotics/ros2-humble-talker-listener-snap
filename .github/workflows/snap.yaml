@@ -20,9 +20,9 @@ jobs:
                     #!/bin/bash
                     ### test snap info consistency
                     info_expected_output="name:      ros2-talker-listener
-                    summary: ROS 2 Talker/Listener Example
+                    summary:   ROS 2 Talker/Listener Example
                     publisher: --
-                    license: unset
+                    license:   unset
                     description: |
                       This example launches a ROS 2 talker and listener.
                     services:
@@ -31,11 +31,12 @@ jobs:
                     installed: 0.1 (x9) 64MB -"
 
                     snap_info_output=$(snap info ros2-talker-listener)
-                    if [ "${info_expected_output%%refresh-date*}" = "${snap_info_output%%refresh-date*}" ]; then
-                      echo "Strings are equal until refresh-date"
-                    else
+                    diff  <(echo "${info_expected_output%%refresh-date*}" ) <(echo "${snap_info_output%%refresh-date*}")
+                    if [ $? -ne 0 ]; then
                         echo "Strings are not equal until refresh-date"
                         exit 1
+                    else
+                        echo "Strings are equal until refresh-date"
                     fi
 
                     ### test ros2-talker-listener snap executes correctly with logs command
