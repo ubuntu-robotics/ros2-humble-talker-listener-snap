@@ -10,23 +10,30 @@ on:
   workflow_call:
 
 jobs:
-  build-install-test-snap:
-    runs-on: ubuntu-latest
-    outputs:
-      snap-file: ${{ steps.build-snap.outputs.snap }}
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        ref: F_add_snap_info_check
-    - uses: snapcore/action-build@v1
-      id: build-snap
-    - name: Install snap
-      run: |
-        sudo snap install ${{ steps.build-snap.outputs.snap }} --devmode
-    - name: Check snap info command is equal to tutorial
-      run: |
-        bash .github/workflows/tests/info_equal_test.sh
-    - uses: actions/upload-artifact@v3
-      with:
-        name: ros2-talker-listener-main
-        path: ${{ steps.build-snap.outputs.snap }}
+  main-snap:
+    uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@F_add_custom_script
+    with:
+      branch-name: main
+      snap-name: ros2-talker-listener
+      test-script: |
+                    #!/bin/bash
+
+                    info_expected_output="name:      ros2-talker-listener
+                    summary:   ROS 2 Talker/Listener Example
+                    publisher: --
+                    license:   unset
+                    description: |
+                      This example launches a ROS 2 talker and listener.
+                    commands:
+                      - ros2-talker-listener
+                    refresh-date: today at 10:54 CEST
+                    installed:    0.1 (x1) 64MB devmode
+                    "
+
+                    snap_info_output=$(snap info ros2-talker-listener)
+                    if [ "${info_expected_output%%refresh-date*}" = "${snap_info_output%%refresh-date*}" ]; then
+                      echo "Strings are equal until refresh-date"
+                    else
+                        echo "Strings are not equal until refresh-date"
+                        exit 1
+                    fi
