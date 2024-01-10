@@ -41,6 +41,7 @@ jobs:
 
                     ### test ros2-talker-listener snap executes correctly with logs command
                     output=$(sudo snap logs ros2-talker-listener)
+                    echo $output
 
                     # Check if both strings are present in the output
                     if [[ $output == *"[listener]: I heard: [Hello World:"* && $output == *"[talker]: Publishing: 'Hello World:"* ]]; then
