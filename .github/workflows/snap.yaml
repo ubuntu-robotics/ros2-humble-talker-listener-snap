@@ -32,16 +32,16 @@ jobs:
 
                     snap_info_output=$(snap info ros2-talker-listener)
                     diff  <(echo "${info_expected_output%%refresh-date*}" ) <(echo "${snap_info_output%%refresh-date*}")
-                    if [ $? -ne 0 ]; then
+                    if [ $? -eq 0 ]; then
+                        echo "Strings are equal until refresh-date"
+                    else
                         echo "Strings are not equal until refresh-date"
                         exit 1
-                    else
-                        echo "Strings are equal until refresh-date"
                     fi
 
                     ### test ros2-talker-listener snap executes correctly with logs command
+                    sleep 5
                     output=$(sudo snap logs ros2-talker-listener)
-                    echo $output
 
                     # Check if both strings are present in the output
                     if [[ $output == *"[listener]: I heard: [Hello World:"* && $output == *"[talker]: Publishing: 'Hello World:"* ]]; then
