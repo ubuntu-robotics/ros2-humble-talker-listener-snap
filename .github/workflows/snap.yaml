@@ -33,15 +33,16 @@ jobs:
                     "
 
                     snap_info_output=$(snap info ros2-talker-listener)
-                    if [ "${info_expected_output%%refresh-date*}" = "${snap_info_output%%refresh-date*}" ]; then
-                      echo "Strings are equal until refresh-date"
+                    diff  <(echo "${info_expected_output%%refresh-date*}" ) <(echo "${snap_info_output%%refresh-date*}")
+                    if [ $? -eq 0 ]; then
+                        echo "Strings are equal until refresh-date"
                     else
                         echo "Strings are not equal until refresh-date"
                         exit 1
                     fi
                     
                     ### test ros2-talker-listener snap executes correctly
-                    sudo snap install ros2-cli --channel=foxy/beta
+                    sudo snap install ros2-cli --channel=humble/beta
                     wait
 
                     check_node() {
