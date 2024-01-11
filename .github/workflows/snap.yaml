@@ -29,7 +29,7 @@ jobs:
                     fi
 
                     ### test ros2-talker-listener snap executes correctly
-                    sudo snap install ros2-cli --channel=foxy/beta
+                    sudo snap install ros2-cli --channel=humble/beta
                     wait
 
                     check_node() {
