@@ -15,3 +15,62 @@ jobs:
     with:
       branch-name: main
       snap-name: ros2-talker-listener
+      snap-install-args: --devmode
+      test-script: |
+                    #!/bin/bash
+
+                    ### test snap info consistency
+                    info_expected_output="name:      ros2-talker-listener
+                    summary:   ROS 2 Talker/Listener Example
+                    publisher: --
+                    license:   unset
+                    description: |
+                      This example launches a ROS 2 talker and listener.
+                    commands:
+                      - ros2-talker-listener
+                    refresh-date: today at 10:54 CEST
+                    installed:    0.1 (x1) 64MB devmode
+                    "
+
+                    snap_info_output=$(snap info ros2-talker-listener)
+                    diff  <(echo "${info_expected_output%%refresh-date*}" ) <(echo "${snap_info_output%%refresh-date*}")
+                    if [ $? -eq 0 ]; then
+                        echo "Strings are equal until refresh-date"
+                    else
+                        echo "Strings are not equal until refresh-date"
+                        exit 1
+                    fi
+                    
+                    ### test ros2-talker-listener snap executes correctly
+                    sudo snap install ros2-cli --channel=humble/beta
+
+                    check_node() {
+                        local node_name=$1
+                        ros2-cli.ros2 node list | grep -q "/$node_name"
+                        if [ $? -eq 0 ]; then
+                            echo "$node_name is running."
+                        else
+                            echo "Error - $node_name is not running."
+                            exit 1
+                        fi
+                    }
+                    check_topic() {
+                        local topic_name=$1
+                        local pub_count=$(ros2-cli.ros2 topic info /$topic_name | grep "Publisher count:" | awk '{print $3}')
+                        local sub_count=$(ros2-cli.ros2 topic info /$topic_name | grep "Subscription count:" | awk '{print $3}')
+                        if [ "$pub_count" -gt 0 ] && [ "$sub_count" -gt 0 ]; then
+                            echo "$topic_name has publishers and subscribers."
+                        else
+                            echo "Error - $topic_name has no publishers or subscribers."
+                            exit 1
+                        fi
+                    }
+
+                    ros2-talker-listener &
+                    pid=$!
+                    check_node talker
+                    check_node listener
+                    check_topic chatter
+                    kill $pid
+
+                    echo "All checks passed successfully."
