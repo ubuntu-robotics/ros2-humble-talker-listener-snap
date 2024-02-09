@@ -11,7 +11,7 @@ on:
 
 jobs:
   confined-snap:
-    uses: ubuntu-robotics/snap_workflows/.github/workflows/build-install-test-snap.yaml@main
+    uses: ubuntu-robotics/snap_workflows/.github/workflows/snap.yaml@main
     with:
       branch-name: confined
       snap-name: ros2-talker-listener
